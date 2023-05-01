@@ -1,0 +1,63 @@
+﻿@model GlobalOne.Umbraco.Models.ContactUsModel
+
+@{
+    Layout = null;
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+}
+
+
+@using (Html.BeginForm("ContactForm", "ContactUsTemplate", FormMethod.Post, new { @id = "i-recaptcha" }))
+{
+    <p class="@(ViewData.ModelState.IsValid ? "" : "errorText")">
+        @if (lang_cur == "en")
+        {
+            @(ViewData.ModelState.IsValid ? "* Mandatory fields" : "* Please fill in the correct information in the fields")
+        }
+        else
+        {
+            @(ViewData.ModelState.IsValid ? "* Задължителни полета" : "* Моля, попълнете коректна информация във полетата")
+        }
+    </p>
+
+
+
+    <div class="form-row form-group">
+        <div class="col">
+            <input class="form-control form-control-lg" type="text" name="Name" id="Name" value="@Model.Name" placeholder="@umbraco.library.GetDictionaryItem("Name")" size="22" tabindex="3" />
+        </div>
+    </div>
+    <div class="form-row form-group">
+        <div class="col">
+            <input class="form-control form-control-lg" type="number" name="PhoneNumber" id="PhoneNumber" value="@Model.PhoneNumber" placeholder="@umbraco.library.GetDictionaryItem("PhoneNumber")" size="22" tabindex="4" />
+        </div>
+    </div>
+
+    <div class="form-row form-group">
+        <div class="col">
+            <input class="form-control form-control-lg" type="email" name="Email" id="Email" value="@Model.Email" placeholder="@umbraco.library.GetDictionaryItem("Email")" size="22" tabindex="4" />
+        </div>
+    </div>
+
+    <div class="form-row form-group">
+        <div class="col">
+            <textarea class="form-control form-control-lg" type="textarea" name="Message" id="Message" cols="28" rows="6" tabindex="7" placeholder="@umbraco.library.GetDictionaryItem("Message")">@Model.Message</textarea>
+        </div>
+    </div>
+
+
+
+
+    <div class="form-row form-group">
+        <div class="col">
+            <button class="g-recaptcha submit-form-button btn btn-block btn-success btn-lg" data-sitekey="6Le7jlUUAAAAAEBzKJbVXb9LatdqbF11lz_FAkiE" type="submit" data-callback='onSubmit'>
+                <span>@umbraco.library.GetDictionaryItem("TitleSubmit")</span>
+            </button>
+        </div>
+    </div>
+
+
+}
+
+
+
+

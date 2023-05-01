@@ -1,0 +1,43 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.Service>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+    var services = CurrentPage.Parent.Descendants("service");
+}
+
+@{Html.RenderPartial("Bredcamp");}
+
+
+
+
+<div class="bg-white fullwidth-split">
+    <div class="container-fluid">
+        <div class="row no-gutters">
+            <div class="col-12 col-sm-5 col-lg-6 order-sm-2 fullwidth-split-image">
+                <img alt="Image" src='@CurrentPage.GetCropUrl("imageCropper", "softwareImage")' class="bg-image" />
+            </div>
+            <div class="col-12 col-sm-7 col-lg-6 order-sm-1 fullwidth-split-text">
+                <div class="col-12 col-sm-8">
+                    <h3 class="h1">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h3>
+                    <hr class="short" />
+                    <span class="lead">@CurrentPage.GetPropertyValue("shortDescription_" + lang_cur)</span>
+                    <hr class="short" />
+                    <ul class="feature-list feature-list-sm">
+                        <li>
+                            <div class="media">
+                                <div class="media-body">
+                                    @CurrentPage.GetPropertyValue("richTextEditor_" + lang_cur)
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

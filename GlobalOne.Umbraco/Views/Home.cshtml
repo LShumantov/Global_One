@@ -1,0 +1,244 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+    var home = CurrentPage.Site();
+    var servicesRenderTitle = CurrentPage.Descendants("containerServices");
+    int count = 1;
+
+}
+
+@*1 Container_Image*@
+<div class="main-container">
+    <section class="bg-dark text-white height-70">
+        <img alt="Image" src='@CurrentPage.GetCropUrl("imageCropper", "homeTopImage")' class="bg-image opacity-70" />
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-5 col-lg-7">
+                    <h1 class="display-3">@CurrentPage.GetPropertyValue("shortDescription_" + lang_cur)</h1>
+                    <div class="lead">
+                        <h2>@CurrentPage.GetPropertyValue("homeImageText_" + lang_cur)</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    @if (!(bool)Model.Content.GetPropertyValue("hideContGalleryService"))
+    {
+        <section>
+            <div class="container">
+                <div class="row justify-content-between mb-5">
+                    <div class="col-auto">
+                        <h3>@Umbraco.GetDictionaryValue("HomePageServiceTitle")</h3>
+                        <hr class="short element style" />
+                    </div>
+                </div>
+                <ul class="row feature-list feature-list-sm">
+                    @foreach (var item in (((IEnumerable<dynamic>)home.Descendants()).Where(q => (q.DocumentTypeAlias == "service"))))
+                    {
+                        if ("service" != null)
+                        {
+                            <li class="col-12 col-md-6 col-lg-4">
+                                <div class="card">
+                                    <a href="@item.Url">
+                                        <img class="card-img-top" src='@item.GetCropUrl("imageCropper", "homeServiceImage")' alt="Card image cap">
+                                    </a>
+                                    <div class="card-body">
+                                        <a href="@item.Url">
+                                            <h4 class="card-title">@item.GetPropertyValue("title_" + lang_cur)</h4>
+                                            <p class="card-text text-body">@item.GetPropertyValue("shortDescription_" + lang_cur)</p>
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="@item.Url" class="btn btn-primary">@Umbraco.GetDictionaryValue("HomePageLearnMoreServices")</a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+
+                    }
+                </ul>
+            </div>
+        </section>
+    }
+
+    @if (!(bool)Model.Content.GetPropertyValue("hideContCollectionService"))
+    {
+        <section>
+            <div class="container home-container-padding-top">
+                <div class="row justify-content-between mb-5">
+
+                    <div class="col-auto">
+                        <h3>@Umbraco.GetDictionaryValue("HomePageServiceTitle")</h3>
+                        <hr class="short element style" />
+                    </div>
+                </div>
+                <ul class="feature-list feature-list-xlg">
+
+                    @{
+                        count = 1;
+                        foreach (var item in (((IEnumerable<dynamic>)home.Descendants()).Where(q => (q.DocumentTypeAlias == "service"))))
+                        {
+                            if ("service" != null)
+                            {
+
+                                if (count % 2 == 1)
+                                {
+                                    <li class="row align-items-center justify-content-around bg-secondaryy">
+                                        <div class="col-12 col-md-6 order-1">
+                                            <a href="@item.Url">
+                                                <img alt="Image" class="img-fluid rounded" src='@item.GetCropUrl("imageCropper", "homeCollectionServiceImage")' />
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-5 text-lg-center order-2">
+                                            <i class="icon-images text-red display-3"></i>
+                                            <h3 class="h1">@item.GetPropertyValue("title_" + lang_cur)</h3>
+                                            <p class="lead">
+                                                @item.GetPropertyValue("shortDescription_" + lang_cur)
+                                            </p>
+                                            <a href="@item.Url" class="btn btn-lg btn-danger">@Umbraco.GetDictionaryValue("HomePageLearnMoreServices")</a>
+                                        </div>
+                                    </li>
+                                    count++;
+                                }
+                                else
+                                {
+
+                                    <li class="row align-items-center justify-content-around bg-secondaryy">
+                                        <div class="col-12 col-md-6 order-md-2">
+                                            <a href="@item.Url">
+                                                <img alt="Image" class="img-fluid rounded" src='@item.GetCropUrl("imageCropper", "homeCollectionServiceImage")' />
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-5 text-lg-center order-md-1">
+                                            <i class="icon-drop text-teal display-3"></i>
+                                            <h3 class="h1">@item.GetPropertyValue("title_" + lang_cur)</h3>
+                                            <p class="lead">
+                                                @item.GetPropertyValue("shortDescription_" + lang_cur)
+                                            </p>
+                                            <a href="@item.Url" class="btn btn-lg btn-success">@Umbraco.GetDictionaryValue("HomePageLearnMoreServices")</a>
+                                        </div>
+                                    </li>
+
+                                    count++;
+                                }
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </section>
+                        }
+
+
+
+    @if (!(bool)Model.Content.GetPropertyValue("hideContCollectionSoftware"))
+    {
+        <section>
+            <div class="container ">
+                <div class="row justify-content-between mb-5">
+
+                    <div class="col-auto">
+                        <h3>@Umbraco.GetDictionaryValue("HomePageSoftwareTitle")</h3>
+                        <hr class="short element style" />
+                    </div>
+                </div>
+                <ul class="feature-list feature-list-xlg">
+                    @{
+                        count = 1;
+                        foreach (var item in (((IEnumerable<dynamic>)home.Descendants()).Where(q => (q.DocumentTypeAlias == "software"))))
+
+                        {
+                            if ("software" != null)
+                            {
+                                if (count % 2 == 1)
+                                {
+                                    <li class="row align-items-center justify-content-around">
+                                        <div class="col-12 col-md-6 order-1">
+                                            <a href="@item.Url">
+                                                <img alt="Image" class="img-fluid rounded" src='@item.GetCropUrl("imageCropper", "homeSoftwareImage")' />
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-5 text-lg-center order-2">
+                                            <i class="icon-images text-red display-3"></i>
+                                            <h3 class="h1">@item.GetPropertyValue("title_" + lang_cur)</h3>
+                                            <p class="lead">
+                                                @item.GetPropertyValue("shortDescription_" + lang_cur)
+                                            </p>
+                                            <a href="@item.Url" class="btn btn-lg btn-danger">@Umbraco.GetDictionaryValue("HomePageLearnMoreSoftware")</a>
+                                        </div>
+                                    </li>
+                                    count++;
+                                }
+                                else
+                                {
+                                    <li class="row align-items-center justify-content-around">
+                                        <div class="col-12 col-md-6 order-md-2">
+                                            <a href="@item.Url">
+                                                <img alt="Image" class="img-fluid rounded" src='@item.GetCropUrl("imageCropper", "homeSoftwareImage")' />
+                                            </a>
+                                        </div>
+                                        <div class="col-12 col-md-6 col-lg-5 text-lg-center order-md-1">
+                                            <i class="icon-drop text-teal display-3"></i>
+                                            <h3 class="h1">@item.GetPropertyValue("title_" + lang_cur)</h3>
+                                            <p class="lead">
+                                                @item.GetPropertyValue("shortDescription_" + lang_cur)
+                                            </p>
+                                            <a href="@item.Url" class="btn btn-lg btn-success">@Umbraco.GetDictionaryValue("HomePageLearnMoreSoftware")</a>
+                                        </div>
+                                    </li>
+                                    count++;
+                                }
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </section>
+                        }
+
+    @if (!(bool)Model.Content.GetPropertyValue("HideContGallerySoftware"))
+    {
+        <section>
+            <div class="container">
+                <div class="row justify-content-between mb-5">
+                    <div class="col-auto">
+                        <h3>@Umbraco.GetDictionaryValue("HomePageSoftwareTitle")</h3>
+                        <hr class="short element style" />
+                    </div>
+                </div>
+                <ul class="row feature-list feature-list-sm">
+                    @foreach (var item in (((IEnumerable<dynamic>)home.Descendants()).Where(q => (q.DocumentTypeAlias == "software"))))
+                    {
+                        if ("software" != null)
+                        {
+                            <li class="col-12 col-md-6 col-lg-4">
+                                <div class="card">
+                                    <a href="@item.Url">
+                                        <img class="card-img-top" src='@item.GetCropUrl("imageCropper", "homeSoftwareImage")' alt="Card image cap">
+                                    </a>
+                                    <div class="card-body">
+                                        <a href="@item.Url">
+                                            <h4 class="card-title">@item.GetPropertyValue("title_" + lang_cur)</h4>
+                                            <p class="card-text text-body">@item.GetPropertyValue("shortDescription_" + lang_cur)</p>
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <a href="@item.Url" class="btn btn-primary">@Umbraco.GetDictionaryValue("HomePageLearnMoreSoftware")</a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+
+                    }
+                </ul>
+            </div>
+        </section>
+    }
+
+</div>

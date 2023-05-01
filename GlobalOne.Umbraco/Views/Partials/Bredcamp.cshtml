@@ -1,0 +1,37 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+  
+}
+<div aria-label="breadcrumb" role="navigation" class="bg-primary text-white">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col">
+                <ol class="breadcrumb">
+                    @foreach (var page in CurrentPage.Ancestors().OrderBy("Level"))
+                    {
+                        if ((page.DocumentTypeAlias == "containerServicesWrap" && page.Parent.DocumentTypeAlias != "containerServicesWrap") ||
+                           (page.DocumentTypeAlias == "containerSoftware" && page.Parent.DocumentTypeAlias != "containerSoftware"))
+                        {
+
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item">
+                                <a href="@page.Url">@page.GetPropertyValue("title_" + lang_cur)</a>
+                            </li>
+                        }
+
+                    }
+                    <li class="breadcrumb-item active" aria-current="page">@CurrentPage.GetPropertyValue("title_" + lang_cur)</li>
+                </ol>
+
+            </div>          
+        </div>     
+    </div>  
+</div>
+
+
+
+

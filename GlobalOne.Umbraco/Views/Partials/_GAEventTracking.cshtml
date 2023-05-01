@@ -1,0 +1,17 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@using UmbracoGAEventTracking
+@{
+    var disable = new EventContentHelper(Model.Content).AreGaEventsDisabled();
+    if (!disable)
+    {
+        <script type="text/javascript" src="~/Scripts/UmbracoGAEventTracking.js"></script>
+        <script type="text/javascript">
+            window.onload = function () {
+                var tracker = new UmbracoGAEventTracking(
+                    @Model.Content.Id,
+                    @Keys.LabelPlaceholderRegex);
+                tracker.init();
+            };
+        </script>
+    }
+}

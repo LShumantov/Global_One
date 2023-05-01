@@ -1,0 +1,92 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.ContactUs>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+}
+
+@{Html.RenderPartial("Bredcamp");}
+
+<div class="main-container">
+    <section class="space-sm">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col text-center">
+                    <a href="index.html">
+                    </a>
+                </div>
+            </div>
+            <div class="row flex-md-row card card-lg">
+                <div class="col-12 col-md-7 card-body bg-secondary">
+                    <div class="text-center mb-5">
+                        <h1 class="h2 mb-2"><em>@Umbraco.GetDictionaryValue("TitleSendMessage")</em></h1>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-lg-9">
+                            @Html.Action("ContactUsTemplate", "ContactForm")
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-5 card-body">
+                    <div>
+                        <div class="mb-5 text-center">
+                            <h3 class="h2 mb-2"><em>@CurrentPage.GetPropertyValue("title_" + lang_cur)</em></h3>
+                        </div>
+                        <ul class="list-unstyled list-spacing-sm mb-5 ">
+                            <li class="row">
+                                <div class="col-2 col-md-1">
+                                </div>
+                                <div class="col-10">
+                                    <em>
+                                        <b>
+                                            @CurrentPage.GetPropertyValue("shortDescription_" + lang_cur)
+                                        </b>
+                                    </em>
+                                </div>
+                            </li>
+                            <li class="row">
+                                <div class="col-2 col-md-1">
+                                </div>
+                                <div class="col-10">
+                                    <em>
+                                        @CurrentPage.GetPropertyValue("address_" + lang_cur)
+                                    </em>
+                                </div>
+                            </li>
+                            <li class="row">
+                                <div class="col-2 col-md-1">
+                                </div>
+                                <div class="col-10">
+                                    <em>
+                                        @CurrentPage.GetPropertyValue("phone_" + lang_cur)
+                                    </em>
+                                </div>
+                            </li>
+                            <li class="row">
+                                <div class="col-2 col-md-1">
+                                </div>
+                                <div class="col-10">
+                                    <em class="e-mail" data-user="ofni" data-website="gb.enolabolg">
+                                    </em>
+
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="card card-sm box-shadow text-left">
+                            <div class="card-body p-4">
+                                <div class="media">
+                                    <i class="icon-credit-card h2 avatar avatar-xs"></i>
+                                    <div class="media-body narrowing-container">
+                                        @CurrentPage.GetPropertyValue("cardInformation_" + lang_cur)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

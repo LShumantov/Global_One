@@ -1,0 +1,64 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.GenericPage>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+}
+
+@{Html.RenderPartial("Bredcamp");}
+
+
+
+
+@if (CurrentPage.Parent.DocumentTypeAlias == "contactUs")
+{
+    <section class="bg-white space-xlg">
+        <div class="container">
+            <div class="row align-items-center justify-content-around">
+                <div class="col-12 col-md-6 col-lg-5 text-center text-md-left">
+                    <h1 class="display-3">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1>
+                    <h2 class="lead">
+                        @CurrentPage.GetPropertyValue("shortDescription_" + lang_cur)
+                    </h2>
+                </div>
+                <div class="col-md-6">
+                    <img alt="Image" src='@CurrentPage.GetCropUrl("imageCropper", "thankYouPageImage")' class="box-shadow img-fluid" />
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <div class="main-container">
+        <div class="title-padding">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-10 col-lg-8 text-center">
+                        <h1 class="display-4">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1>
+                        <span class="lead">@CurrentPage.GetPropertyValue("shortDescription_" + lang_cur)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <img alt="Image" src='@CurrentPage.GetCropUrl("imageCropper", "aboutUsImage")' class="img-fluid">
+                </div>
+            </div>
+        </div>
+        <div class="title-pading">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8 col-lg-6">
+                        @CurrentPage.GetPropertyValue("richTextEditor_" + lang_cur)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+

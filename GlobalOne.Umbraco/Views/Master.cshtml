@@ -1,0 +1,139 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+
+@{
+    Layout = null;
+    var home = @CurrentPage.Site();
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="~/theme/pages/assets/img/LogoForGlobaOne/GlobalOneUnicat1.png" type="image/x-icon" />
+    <title>Global One Ltd.:Software</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A robust suite of app and landing page templates by Medium Rare">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,400i,500" rel="stylesheet">
+    <link href="/theme/pages/assets/css/socicon.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/theme/pages/assets/css/entypo.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/theme/pages/assets/css/theme.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/theme/pages/assets/css/style.css" rel="stylesheet" type="text/css" media="all" />
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119551873-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-119551873-1');
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        function onSubmit(token) {
+            document.getElementById("i-recaptcha").submit();
+        }
+    </script>
+
+</head>
+
+<body>
+    <div class="nav-container">
+
+        <div class="bg-dark navbar-dark" data-sticky="top">
+            <div class="container">
+                <nav class="navbar navbar-expand-lg">
+
+                    <a class="navbar-brand" href="@home.Url">
+                        <img alt="Wingman" src="~/theme/pages/assets/img/LogoForGlobaOne/GlobalOne3.1.png" />
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="icon-menu h4"></i>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+
+                        @{Html.RenderPartial("MainNavigation");}
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+    @RenderBody()
+
+
+
+
+
+
+    <footer class="bg-gray text-light footer-long">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-3">
+                    <img alt="Wingman" src="~/theme/pages/assets/img/LogoForGlobaOne/GlobalOne2.1.png" />
+                </div>
+                <div class="col-12 col-md-9">
+
+
+                    @foreach (var items in (((IEnumerable<dynamic>)CurrentPage.Site().Children).Where(q => q.DocumentTypeAlias == "contactUs")))
+                    {
+
+
+                        <p class="h5">@items.GetPropertyValue("title_" + lang_cur)</p>
+                        <hr>
+                        <div class="row no-gutters">
+
+                            <div class="col-6 col-lg-4">
+                                <h6>@Umbraco.GetDictionaryValue("AddressTitle")</h6>
+                                <p>
+                                    <em>
+
+                                        @Html.Raw(@umbraco.library.ReplaceLineBreaks(@items.GetPropertyValue("address_" + lang_cur)))
+                                    </em>
+
+                                </p>
+                            </div>
+                            <div class="col-6 col-lg-4">
+                                <h6>@Umbraco.GetDictionaryValue("TelephoneTitle") </h6>
+                                <p>
+
+                                    <em>
+                                        @Html.Raw(@umbraco.library.ReplaceLineBreaks(@items.GetPropertyValue("phone_" + lang_cur)))
+                                    </em>
+                                </p>
+                            </div>
+                            <div class="col-6 col-lg-4">
+                                <h6>@Umbraco.GetDictionaryValue("EmailTitle")</h6>
+                                <p>
+                                    <em class="e-mail" data-user="ofni" data-website="gb.enolabolg"></em>
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="/theme/pages/assets/js/jquery.min.js"></script>
+    <script src="/theme/pages/assets/js/popper.min.js"></script>
+    <script src="/theme/pages/assets/js/jquery.smartWizard.min.js"></script>
+    <script src="/theme/pages/assets/js/flickity.pkgd.min.js"></script>
+    <script src="/theme/pages/assets/js/scrollMonitor.js"></script>
+    <script src="/theme/pages/assets/js/smooth-scroll.polyfills.js"></script>
+    <script src="/theme/pages/assets/js/prism.js"></script>
+    <script src="/theme/pages/assets/js/zoom.min.js"></script>
+    <script src="/theme/pages/assets/js/bootstrap.js"></script>
+    <script src="/theme/pages/assets/js/theme.js"></script>
+    <script src="https://use.fontawesome.com/5464e892b3.js"></script>
+
+
+</body>
+</html>

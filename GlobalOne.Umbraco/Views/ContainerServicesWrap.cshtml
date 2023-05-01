@@ -1,0 +1,625 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage<ContentModels.ContainerServicesWrap>
+@using ContentModels = Umbraco.Web.PublishedContentModels;
+@{
+    Layout = "Master.cshtml";
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+    var items = CurrentPage.Descendants("service");
+    var services = CurrentPage.Descendants("containerServices");
+    var servicesRenderTitle = CurrentPage.Parent.Descendants("containerServices");
+}
+@{
+    Html.RenderPartial("Bredcamp");
+}
+
+@if (!(bool)Model.Content.GetPropertyValue("hideContainerHeader"))
+{
+    <section class="bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h1 class="display-4">@CurrentPage.GetPropertyValue("title_" + lang_cur)</h1>
+                    <span class="lead">@CurrentPage.GetPropertyValue("shortDescription_" + lang_cur)</span>
+                    <div class="media blog-post-author">
+                        <img alt="Image" class="avatar avatar-sm mr-3" style="width: 90px;height: 90px;" src='@CurrentPage.GetCropUrl("imageCropper", "containerServiceImageTop")' />
+                        <div class="media-body">
+                            <span class="text-small">@CurrentPage.GetPropertyValue("imageText_" + lang_cur)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+
+@if (!(bool)Model.Content.GetPropertyValue("hideContainerDescription"))
+{
+    <div class="space-top-bootom">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-12 col-md-4">
+
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div>
+                                <span class="h6">@Umbraco.GetDictionaryValue("ContainerTitleForAllServices")</span>
+
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled list-spacing-sm">
+                                @foreach (var item in servicesRenderTitle)
+                                {
+                                    <li>
+                                        <i class="icon-text-document text-muted mr-1"></i>
+                                        <a href="@item.Url">@item.GetPropertyValue("title_" + lang_cur)</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 col-md-8">
+                    <div>
+                        @CurrentPage.GetPropertyValue("richTextEditor_" + lang_cur)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@if (!(bool)Model.Content.GetPropertyValue("hideTableWithServices"))
+{
+    foreach (var item in services)
+    {
+        if (item.HasValue("firstRowTitle_" + lang_cur))
+        {
+            <section class="space-top-bootom">
+                <div class="container">
+                    <div class="row justify-content-between mb-5">
+
+                        <div class="col-auto">
+                            <h3>@item.GetPropertyValue("title_" + lang_cur)</h3>
+                            <hr class="short element style" />
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <table class="table table-bordered table-responsive pricing test table table-hover">
+                                <thead>
+
+                                    <tr>
+                                        <th scope="col"></th>
+
+                                        @if (item.HasValue("textPriceTable_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("textPriceTable_" + lang_cur)</th>
+                                        }
+
+
+                                        @if (item.HasValue("firstRowTitle_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("firstRowTitle_" + lang_cur)</th>
+                                        }
+                                        @if (item.HasValue("secondRowTitle_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("secondRowTitle_" + lang_cur)</th>
+                                        }
+                                        @if (item.HasValue("thirdRowTitle_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("thirdRowTitle_" + lang_cur)</th>
+                                        }
+                                        @if (item.HasValue("fourthRowTitle_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("fourthRowTitle_" + lang_cur)</th>
+                                        }
+
+                                        @if (item.HasValue("fifthRowTitle_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("fifthRowTitle_" + lang_cur)</th>
+                                        }
+                                        @if (item.HasValue("sixthRowTitle_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("sixthRowTitle_" + lang_cur)</th>
+                                        }
+                                        @if (item.HasValue("seventhRowTitle_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("seventhRowTitle_" + lang_cur)</th>
+                                        }
+                                        @if (item.HasValue("eighthRowTitle_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("eighthRowTitle_" + lang_cur)</th>
+                                        }
+                                        @if (item.HasValue("ninthRowTitle_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("ninthRowTitle_" + lang_cur)</th>
+                                        }
+
+                                        @if (item.HasValue("tenthRowTitle_" + lang_cur))
+                                        {
+                                            <th scope="row" class="text-right">@item.GetPropertyValue("tenthRowTitle_" + lang_cur)</th>
+                                        }
+
+                                        <th scope="row" class="text-right"></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var child in item.Children)
+                                    {
+
+                                        <tr>
+                                            <td>
+                                                <h5>@child.GetPropertyValue("title_" + lang_cur)</h5>
+                                            </td>
+
+
+                                            @if (item.HasValue("textPriceTable_" + lang_cur))
+                                            {
+                                                <td>
+                                                    <span class="display-4">@child.GetPropertyValue("priceForThePeriod_" + lang_cur)</span>
+                                                    <span class="text-small">@child.GetPropertyValue("period_" + lang_cur)</span>
+                                                </td>
+                                            }
+
+                                            @if (item.HasValue("firstRowTitle_" + lang_cur))
+                                            {
+                                                if (child.HasValue("firstRowBodyRadioButtonList_" + lang_cur))
+                                                {
+                                                    var preValue = Umbraco.GetPreValueAsString(child.GetPropertyValue<int>("firstRowBodyRadioButtonList_" + lang_cur));
+
+                                                    if (preValue == "string")
+                                                    {
+                                                        <td>
+                                                            @child.GetPropertyValue("firstRowBody_" + lang_cur)
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCheckTextGreen")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-check text-green"></i>
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCrossTrextRed")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-circle-with-cross text-red"></i>
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="icon-circle-with-cross text-blue"></i>
+                                                    </td>
+                                                }
+                                            }
+
+
+                                            @if (item.HasValue("secondRowTitle_" + lang_cur))
+                                            {
+                                                if (child.HasValue("secondRowBodyRadioButtonList_" + lang_cur))
+                                                {
+                                                    var preValue = Umbraco.GetPreValueAsString(child.GetPropertyValue<int>("secondRowBodyRadioButtonList_" + lang_cur));
+
+                                                    if (preValue == "string")
+                                                    {
+                                                        <td>
+                                                            @child.GetPropertyValue("secondRowBody_" + lang_cur)
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCheckTextGreen")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-check text-green"></i>
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCrossTrextRed")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-circle-with-cross text-red"></i>
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="icon-circle-with-cross text-blue"></i>
+                                                    </td>
+                                                }
+                                            }
+
+
+                                            @if (item.HasValue("thirdRowTitle_" + lang_cur))
+                                            {
+                                                if (child.HasValue("thirdRowBodyRadioButtonList_" + lang_cur))
+                                                {
+                                                    var preValue = Umbraco.GetPreValueAsString(child.GetPropertyValue<int>("thirdRowBodyRadioButtonList_" + lang_cur));
+
+                                                    if (preValue == "string")
+                                                    {
+                                                        <td>
+                                                            @child.GetPropertyValue("thirdRowBody_" + lang_cur)
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCheckTextGreen")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-check text-green"></i>
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCrossTrextRed")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-circle-with-cross text-red"></i>
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="icon-circle-with-cross text-blue"></i>
+                                                    </td>
+                                                }
+                                            }
+
+
+                                            @if (item.HasValue("fourthRowTitle_" + lang_cur))
+                                            {
+                                                if (child.HasValue("fourtRowBodyRadioButtonList_" + lang_cur))
+                                                {
+                                                    var preValue = Umbraco.GetPreValueAsString(child.GetPropertyValue<int>("fourtRowBodyRadioButtonList_" + lang_cur));
+
+                                                    if (preValue == "string")
+                                                    {
+                                                        <td>
+                                                            @child.GetPropertyValue("fourthRowBody_" + lang_cur)
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCheckTextGreen")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-check text-green"></i>
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCrossTrextRed")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-circle-with-cross text-red"></i>
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="icon-circle-with-cross text-blue"></i>
+                                                    </td>
+                                                }
+                                            }
+
+
+
+                                            @if (item.HasValue("fifthRowTitle_" + lang_cur))
+                                            {
+                                                if (child.HasValue("fifthRowBodyRadioButtonList_" + lang_cur))
+                                                {
+                                                    var preValue = Umbraco.GetPreValueAsString(child.GetPropertyValue<int>("fifthRowBodyRadioButtonList_" + lang_cur));
+
+                                                    if (preValue == "string")
+                                                    {
+                                                        <td>
+                                                            @child.GetPropertyValue("fifthRowBody_" + lang_cur)
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCheckTextGreen")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-check text-green"></i>
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCrossTrextRed")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-circle-with-cross text-red"></i>
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="icon-circle-with-cross text-blue"></i>
+                                                    </td>
+                                                }
+                                            }
+
+                                            @if (item.HasValue("sixthRowTitle_" + lang_cur))
+                                            {
+                                                if (child.HasValue("sixthRowBodyRadioButtonList_" + lang_cur))
+                                                {
+                                                    var preValue = Umbraco.GetPreValueAsString(child.GetPropertyValue<int>("sixthRowBodyRadioButtonList_" + lang_cur));
+
+                                                    if (preValue == "string")
+                                                    {
+                                                        <td>
+                                                            @child.GetPropertyValue("sixthRowBody_" + lang_cur)
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCheckTextGreen")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-check text-green"></i>
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCrossTrextRed")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-circle-with-cross text-red"></i>
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="icon-circle-with-cross text-blue"></i>
+                                                    </td>
+                                                }
+                                            }
+
+                                            @if (item.HasValue("seventhRowTitle_" + lang_cur))
+                                            {
+                                                if (child.HasValue("seventhRowBodyRadioButtonList_" + lang_cur))
+                                                {
+                                                    var preValue = Umbraco.GetPreValueAsString(child.GetPropertyValue<int>("seventhRowBodyRadioButtonList_" + lang_cur));
+
+                                                    if (preValue == "string")
+                                                    {
+                                                        <td>
+                                                            @child.GetPropertyValue("seventhRowBody_" + lang_cur)
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCheckTextGreen")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-check text-green"></i>
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCrossTrextRed")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-circle-with-cross text-red"></i>
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="icon-circle-with-cross text-blue"></i>
+                                                    </td>
+                                                }
+
+                                            }
+
+                                            @if (item.HasValue("eighthRowTitle_" + lang_cur))
+                                            {
+                                                if (child.HasValue("eighthRowBodyRadioButtonList_" + lang_cur))
+                                                {
+                                                    var preValue = Umbraco.GetPreValueAsString(child.GetPropertyValue<int>("eighthRowBodyRadioButtonList_" + lang_cur));
+
+                                                    if (preValue == "string")
+                                                    {
+                                                        <td>
+                                                            @child.GetPropertyValue("eighthRowBody_" + lang_cur)
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCheckTextGreen")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-check text-green"></i>
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCrossTrextRed")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-circle-with-cross text-red"></i>
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="icon-circle-with-cross text-blue"></i>
+                                                    </td>
+                                                }
+                                            }
+
+                                            @if (item.HasValue("ninthRowTitle_" + lang_cur))
+                                            {
+                                                if (child.HasValue("ninthRowBodyRadioButtonList_" + lang_cur))
+                                                {
+                                                    var preValue = Umbraco.GetPreValueAsString(child.GetPropertyValue<int>("ninthRowBodyRadioButtonList_" + lang_cur));
+
+                                                    if (preValue == "string")
+                                                    {
+                                                        <td>
+                                                            @child.GetPropertyValue("ninthRowBody_" + lang_cur)
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCheckTextGreen")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-check text-green"></i>
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCrossTrextRed")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-circle-with-cross text-red"></i>
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="icon-circle-with-cross text-blue"></i>
+                                                    </td>
+                                                }
+                                            }
+
+                                            @if (item.HasValue("tenthRowTitle_" + lang_cur))
+                                            {
+
+                                                if (child.HasValue("tenthRowBodyRadioButtonList_" + lang_cur))
+                                                {
+                                                    var preValue = Umbraco.GetPreValueAsString(child.GetPropertyValue<int>("tenthRowBodyRadioButtonList_" + lang_cur));
+
+                                                    if (preValue == "string")
+                                                    {
+                                                        <td>
+                                                            @child.GetPropertyValue("tenthRowBody_" + lang_cur)
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCheckTextGreen")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-check text-green"></i>
+                                                        </td>
+                                                    }
+                                                    else if (preValue == "iconCrossTrextRed")
+                                                    {
+                                                        <td>
+                                                            <i class="icon-circle-with-cross text-red"></i>
+                                                        </td>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <td>
+                                                        <i class="icon-circle-with-cross text-blue"></i>
+                                                    </td>
+                                                }
+                                            }
+                                            <td>
+                                                <a class="btn btn-social btn-success" href="@child.Url">@Umbraco.GetDictionaryValue("ContainerService_ContainerPriceTable_SelectThisPlan")</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </section>
+
+        }
+    }
+}
+@if (!(bool)Model.Content.GetPropertyValue("hideContainerGallery"))
+{
+    <section class="space-top-bootom">
+        <div class="container">
+            <div class="row justify-content-between mb-5">
+
+                <div class="col-auto">
+                    <h3>@Umbraco.GetDictionaryValue("ContainerServices_ContainerGallery_Title")</h3>
+                    <hr class="short element style" />
+                </div>
+            </div>
+            <ul class="row feature-list feature-list-sm">
+                @foreach (var item in items)
+                {
+                    if ("service" != null)
+                    {
+                        <li class="col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <a href="@item.Url">
+                                    <img class="card-img-top" src='@item.GetCropUrl("imageCropper", "homeServiceImage")' alt="Card image cap">
+                                </a>
+                                <div class="card-body">
+                                    <a href="@item.Url">
+                                        <h4 class="card-title">@item.GetPropertyValue("title_" + lang_cur)</h4>
+                                        <p class="card-text text-body">@item.GetPropertyValue("shortDescription_" + lang_cur)</p>
+                                    </a>
+
+                                </div>
+                                <div class="card-body">
+                                    <a href="@item.Url" class="btn btn-social btn-primary">@Umbraco.GetDictionaryValue("HomePageLearnMoreServices")</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </section>
+}
+
+
+@if (!(bool)Model.Content.GetPropertyValue("hideContainerPriceBox"))
+{
+    <section class="space-top-bootom">
+        <div class="container">
+            <div class="row justify-content-between mb-5">
+                <div class="col-auto">
+                    <h3>@Umbraco.GetDictionaryValue("ContainerServices_ContainerPriceBox_Title")</h3>
+                    <hr class="short element style" />
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="pricing-monthly">
+                    <div class="row">
+                        @foreach (var item in items)
+                        {
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card pricing card-lg">
+                                    <div class="card-body">
+                                        <h5>@item.GetPropertyValue("title_" + lang_cur)</h5>
+                                        <span class="display-3 price-collapse collapse show">@item.GetPropertyValue("priceForThePeriod_" + lang_cur)</span>
+                                        <span class="text-small">@item.GetPropertyValue("period_" + lang_cur)</span>
+                                        <span class="h6">@item.GetPropertyValue("shortDescription_" + lang_cur):</span>
+                                        <div class="col-auto">
+                                            <a href="@item.Url" class="btn btn-social btn-primary">@Umbraco.GetDictionaryValue("PriceBoxTitleViewAll")</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+
+
+
+
+    @*Тable conversion Script*@
+    <script>
+        $(".test").each(function () {
+            var $this = $(this);
+            var newrows = [];
+            $this.find("tr").each(function () {
+                var i = 0;
+                $(this).find("td,th").each(function () {
+                    i++;
+                    if (newrows[i] === undefined) {
+                        newrows[i] = $("<tr></tr>");
+                    }
+                    newrows[i].append($(this));
+                });
+            });
+            $this.find("tr").remove();
+            $.each(newrows, function () {
+                $this.append(this);
+            });
+        });
+
+    </script>
+

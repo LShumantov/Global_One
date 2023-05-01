@@ -1,0 +1,122 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    var home = CurrentPage.Site();
+    var rootHome = CurrentPage.AncestorOrSelf(1);
+}
+
+  <script>
+      function goToCulture(target) {
+          var str = window.location.pathname;
+
+          var param = window.location.href.split("?")[1];
+          window.location.replace("/" + target + str.substr(3, str.leght) + ((param != undefined && param != "") ? ("?" + param) : ""));
+       }
+  </script>
+
+ @*query paraeteres*@
+@if (home.Children.Any())
+{
+    var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+    <ul class="navbar-nav">
+
+        <li class="nav-item">
+            <a href="@rootHome.Url" class="nav-link">@rootHome.GetPropertyValue("title_" + lang_cur)</a>
+        </li>
+
+        @if (home.Children.Any())
+        {
+            @renderNode(home.Children, true)
+        }
+
+       
+        
+
+
+        <li class="nav-item dropdown">
+            @*<a class="icon-globe h3 nav-link dropdown-toggle"href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-expanded="false"></a>*@
+            <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-globe fa-lg" aria-hidden="true"></i>
+            </a>          
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">                        
+                <a class="dropdown-item" href="#" onClick="goToCulture('bg')">Български</a>
+                <div class="dropdown-divider"></div>
+                 <a class="dropdown-item" href="#" onClick="goToCulture('en')">English</a>                            
+            </div>
+        </li>
+
+        @*<li class="logo_style ">
+            <a href="#" ><img src="~/theme/img/EU.jpg" alt="Eco Nature" class="menuLogo" /></a>
+        </li>*@
+
+    </ul>
+}
+
+
+@helper renderNode(dynamic pages, bool isFirst = false)
+{
+var lang_cur = System.Threading.Thread.CurrentThread.CurrentUICulture.IetfLanguageTag.ToLower().Substring(0, 2);
+
+foreach (var page in (((IEnumerable<dynamic>)pages).Where(q => (q.DocumentTypeAlias == "home" || q.DocumentTypeAlias == "containerServices"
+|| q.DocumentTypeAlias == "service" || q.DocumentTypeAlias == "software" || q.DocumentTypeAlias == "containerSoftware"
+|| q.DocumentTypeAlias == "contactUs" || q.DocumentTypeAlias == "genericPage" 
+|| q.DocumentTypeAlias == "containerServicesWrap") && !(bool)q.GetPropertyValue("hideFromMenu"))))
+{
+
+
+  
+
+    if (page.DocumentTypeAlias == "containerSoftware" ||(page.DocumentTypeAlias == "containerServicesWrap"))
+    {
+
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="@page.Url" id="pagesDropdown" role="button" data-toggle="dropdown" aria-expanded="false">@page.GetPropertyValue("title_" + lang_cur)</a>                             
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown"> 
+              @foreach (var child in page.Children)
+              {
+                  <a class="dropdown-item" href="@child.Url">
+                      <span class="h6 mb-0">@child.GetPropertyValue("title_" + lang_cur)</span>
+                      @*<p class="text-small text-muted">Showcase your product ...</p>*@
+                  </a>
+
+                 
+                      <div class="dropdown-divider"></div>
+                                           
+                  foreach (var item in child.Children)
+                  {
+                      <a class="dropdown-item" href="@item.Url">
+                          <span class="h6 mb-0">@item.GetPropertyValue("title_" + lang_cur)</span>
+                          @*<p class="text-small text-muted">Showcase your product ...</p>*@
+                      </a>
+
+                      if (!item.IsLast())
+                      {
+                          <div class="dropdown-divider"></div>
+                      }
+                  }
+              }
+                 
+              
+          </div>
+     </li>   
+    }
+    else
+    {
+           <li class="nav-item">
+              <a href="@page.Url" class="nav-link">@page.GetPropertyValue("title_" + lang_cur)</a>
+           </li>
+    }
+   
+       
+
+
+
+
+}
+}
+
+
+
+
+
+
